@@ -1,6 +1,7 @@
-﻿using Microsoft.EntityFrameworkCore.Migrations;
+﻿using System;
+using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace MappingDemo.Migrations
+namespace MappingDemo.Data.Migrations
 {
     public partial class initial : Migration
     {
@@ -13,7 +14,9 @@ namespace MappingDemo.Migrations
                     AuthorId = table.Column<int>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
                     FirstName = table.Column<string>(type: "TEXT", nullable: true),
-                    LastName = table.Column<string>(type: "TEXT", nullable: true)
+                    LastName = table.Column<string>(type: "TEXT", nullable: true),
+                    StarRating = table.Column<double>(type: "REAL", nullable: false),
+                    DateOfBirth = table.Column<DateTime>(type: "TEXT", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -43,13 +46,13 @@ namespace MappingDemo.Migrations
 
             migrationBuilder.InsertData(
                 table: "Authors",
-                columns: new[] { "AuthorId", "FirstName", "LastName" },
-                values: new object[] { 1, "Ian", "Flemming" });
+                columns: new[] { "AuthorId", "DateOfBirth", "FirstName", "LastName", "StarRating" },
+                values: new object[] { 1, new DateTime(1908, 5, 28, 0, 0, 0, 0, DateTimeKind.Utc), "Ian", "Flemming", 4.9100000000000001 });
 
             migrationBuilder.InsertData(
                 table: "Authors",
-                columns: new[] { "AuthorId", "FirstName", "LastName" },
-                values: new object[] { 2, "John", "le Carré" });
+                columns: new[] { "AuthorId", "DateOfBirth", "FirstName", "LastName", "StarRating" },
+                values: new object[] { 2, new DateTime(1931, 10, 19, 0, 0, 0, 0, DateTimeKind.Utc), "John", "le Carré", 4.0099999999999998 });
 
             migrationBuilder.InsertData(
                 table: "Books",

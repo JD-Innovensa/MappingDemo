@@ -1,14 +1,10 @@
 ﻿using Mapping.Data;
 using Mapping.Dto;
-using MappingDemo.Helpers;
+using MappingDemo.Service.Manual.Helpers;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace MappingDemo.Service
+namespace MappingDemo.Service.Manual
 {
     public class BookServiceManualMapping: IBookService
     {
@@ -19,6 +15,7 @@ namespace MappingDemo.Service
                 return null;
             }
 
+            // Manual map
             var author = MappingHelper.MapAuthorDtoAuthor(authorDto);
 
             using var context = new BooksDbContext();
@@ -29,7 +26,24 @@ namespace MappingDemo.Service
 
             context.SaveChanges();
 
+            // Manual map
             return MappingHelper.MapAuthorAuthorDto(author);
+        }
+
+        public BookWithAuthorDto GetBookWithAuthor(int id)
+        {
+            using var context = new BooksDbContext();
+
+            context.Database.EnsureCreated();
+
+            var book = context.Books
+                .Include(x => x.Author)
+                .First(x => x.AuthorId == id);
+
+            // Manual map
+            var anotherBookDto = MappingHelper.MapBookAnotherBookDto(book);
+
+            return anotherBookDto;
         }
 
         public AuthorDto GetAuthor(int id)

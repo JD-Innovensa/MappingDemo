@@ -8,5 +8,7 @@ namespace MappingDemo.Service
         public AuthorDto GetAuthorWithBooks(int id);
 
         public AuthorDto AddAuthor(AuthorDto authorDto);
+
+        public BookWithAuthorDto GetBookWithAuthor(int id);
     }
 }

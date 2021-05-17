@@ -1,25 +1,22 @@
 ﻿using AutoMapper;
+using AutoMapper.QueryableExtensions;
 using Mapping.Data;
 using Mapping.Data.Models;
 using Mapping.Dto;
-using MappingDemo.Config;
+using MappingDemo.Service.Automapper.Config;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace MappingDemo.Service
+namespace MappingDemo.Service.Automapper
 {
     public class BookServiceAutoMapper : IBookService
     {
-        static MapperConfiguration Config = new MapperConfiguration(cfg =>
+        static readonly MapperConfiguration Config = new(cfg =>
         {
             cfg.AddProfile<BookMappingProfile>();
         });
 
-        private Mapper mapper;
+        private readonly Mapper mapper;
 
         public BookServiceAutoMapper()
         {
@@ -48,6 +45,22 @@ namespace MappingDemo.Service
             return mapper.Map<AuthorDto>(author);
         }
 
+        public BookWithAuthorDto GetBookWithAuthor(int id)
+        {
+            using var context = new BooksDbContext();
+
+            context.Database.EnsureCreated();
+
+            var book = context.Books
+                .Include(x => x.Author)
+                .First(x => x.AuthorId == id);
+
+            // Automapper
+            var anotherBookDto = mapper.Map<BookWithAuthorDto>(book);
+
+            return anotherBookDto;
+        }
+
         public AuthorDto GetAuthor(int id)
         {
             using var context = new BooksDbContext();
@@ -68,8 +81,9 @@ namespace MappingDemo.Service
 
             context.Database.EnsureCreated();
 
-            var author = context.Authors
+            var author = context.Authors                
                 .Include(x => x.Books)
+                .ProjectTo<AuthorDto>(Config)
                 .First(x => x.AuthorId == id);
 
             // Automapper

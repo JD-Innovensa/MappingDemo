@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
-namespace Mapping.Data.Models
+﻿namespace Mapping.Data.Models
 {
     public class Book
     {

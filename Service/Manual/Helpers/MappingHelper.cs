@@ -2,7 +2,7 @@
 using Mapping.Dto;
 using System.Linq;
 
-namespace MappingDemo.Helpers
+namespace MappingDemo.Service.Manual.Helpers
 {
     public static class MappingHelper
     {
@@ -13,6 +13,7 @@ namespace MappingDemo.Helpers
                 AuthorId = author.AuthorId,
                 FirstName = author.FirstName,
                 LastName = author.LastName,
+                StarRating = author.StarRating,
                 Books = author.Books?.Select(x => MapBookBookDto(x))
             } : null;
         }
@@ -25,6 +26,18 @@ namespace MappingDemo.Helpers
                 BookId = book.BookId,
                 Title = book.Title,
                 Year = book.Year
+            } : null;
+        }
+
+        public static BookWithAuthorDto MapBookAnotherBookDto(Book book)
+        {
+            return book != null ? new BookWithAuthorDto
+            {
+                AuthorId = book.AuthorId,
+                BookId = book.BookId,
+                Title = book.Title,
+                AuthorStarRating = book.Author.StarRating,
+                AuthorFullName = book.Author?.FirstName + " " + book.Author?.LastName
             } : null;
         }
 
