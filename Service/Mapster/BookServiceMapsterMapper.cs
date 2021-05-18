@@ -14,6 +14,7 @@ namespace MappingDemo.Service.Mapster
             // Added config here for simplicity
             TypeAdapterConfig<Book, BookWithAuthorDto>.NewConfig()
                 .Map(dest => dest.AuthorFullName, src => string.Format("{0} {1}", src.Author.FirstName, src.Author.LastName));
+                //.Ignore(dest => dest.Year); // Required to prevent int to byte conversion!
         }
 
         public AuthorDto AddAuthor(AuthorDto authorDto)

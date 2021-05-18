@@ -68,10 +68,10 @@ namespace MappingDemo
 
         private static void WriteAuthor(AuthorDto authorDto)
         {
-            Console.WriteLine($"AuthorId : {authorDto.AuthorId}, FirstName: {authorDto.FirstName}, Last Name: {authorDto.LastName}, Books: {(authorDto.Books != null ? "" : "NULL")}");
+            Console.WriteLine($"AuthorId : {authorDto.AuthorId}, FirstName: {authorDto.FirstName}, Last Name: {authorDto.LastName}, Books: {(authorDto.Books != null ? "COLLECTION" : "NULL")}");
 
             if (authorDto.Books != null)
-            {
+            {                
                 foreach (BookDto bookDto in authorDto.Books)
                 {
                     WriteBook(bookDto);

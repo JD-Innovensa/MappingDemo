@@ -65,13 +65,11 @@ namespace MappingDemo.Service.Automapper
 
             context.Database.EnsureCreated();
 
-            var author = context.Authors
+            // Automapper Projection
+            var authorDto = context.Authors
                 .Include(x => x.Books)
                 .ProjectTo<AuthorDto>(Config)
                 .First(x => x.AuthorId == id);
-
-            // Automapper
-            var authorDto = mapper.Map<AuthorDto>(author);
 
             return authorDto;
         }
