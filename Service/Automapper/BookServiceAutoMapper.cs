@@ -11,10 +11,10 @@ namespace MappingDemo.Service.Automapper
 {
     public class BookServiceAutoMapper : IBookService
     {
-        static readonly MapperConfiguration Config = new(cfg =>
-        {
-            cfg.AddProfile<BookMappingProfile>();
-        });
+        private static readonly MapperConfiguration Config = new(cfg =>
+           {
+               cfg.AddProfile<BookMappingProfile>();
+           });
 
         private readonly Mapper mapper;
 
@@ -40,25 +40,9 @@ namespace MappingDemo.Service.Automapper
             context.Authors.Add(author);
 
             context.SaveChanges();
-            
+
             // Automapper
             return mapper.Map<AuthorDto>(author);
-        }
-
-        public BookWithAuthorDto GetBookWithAuthor(int id)
-        {
-            using var context = new BooksDbContext();
-
-            context.Database.EnsureCreated();
-
-            var book = context.Books
-                .Include(x => x.Author)
-                .First(x => x.AuthorId == id);
-
-            // Automapper
-            var anotherBookDto = mapper.Map<BookWithAuthorDto>(book);
-
-            return anotherBookDto;
         }
 
         public AuthorDto GetAuthor(int id)
@@ -81,7 +65,7 @@ namespace MappingDemo.Service.Automapper
 
             context.Database.EnsureCreated();
 
-            var author = context.Authors                
+            var author = context.Authors
                 .Include(x => x.Books)
                 .ProjectTo<AuthorDto>(Config)
                 .First(x => x.AuthorId == id);
@@ -90,6 +74,22 @@ namespace MappingDemo.Service.Automapper
             var authorDto = mapper.Map<AuthorDto>(author);
 
             return authorDto;
+        }
+
+        public BookWithAuthorDto GetBookWithAuthor(int id)
+        {
+            using var context = new BooksDbContext();
+
+            context.Database.EnsureCreated();
+
+            var book = context.Books
+                .Include(x => x.Author)
+                .First(x => x.AuthorId == id);
+
+            // Automapper
+            var anotherBookDto = mapper.Map<BookWithAuthorDto>(book);
+
+            return anotherBookDto;
         }
     }
 }

@@ -7,16 +7,17 @@ namespace Mapping.Data
 {
     public class BooksDbContext : DbContext
     {
-        public DbSet<Book> Books { get; set; }
+        public static readonly LoggerFactory _myLoggerFactory = new(new[] { new Microsoft.Extensions.Logging.Debug.DebugLoggerProvider() });
 
         public DbSet<Author> Authors { get; set; }
 
-        public static readonly LoggerFactory _myLoggerFactory = new (new[] { new Microsoft.Extensions.Logging.Debug.DebugLoggerProvider() });
+        public DbSet<Book> Books { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             optionsBuilder.UseSqlite("Data Source=Books.db;");
 
+            // Here for simplicity
             optionsBuilder.UseLoggerFactory(_myLoggerFactory);
         }
 
@@ -25,9 +26,8 @@ namespace Mapping.Data
             modelBuilder.Entity<Book>().ToTable("Books");
             modelBuilder.Entity<Author>().ToTable("Authors");
 
-
-            modelBuilder.Entity<Author>().HasData(new Author { AuthorId = 1, FirstName = "Ian", LastName = "Flemming", DateOfBirth = new DateTime(1908, 05, 28,0, 0, 0, 0, DateTimeKind.Utc),StarRating = 4.91  });
-            modelBuilder.Entity<Author>().HasData(new Author { AuthorId = 2, FirstName = "John", LastName = "le Carré", DateOfBirth = new DateTime(1931, 10, 19,0, 0, 0, 0, DateTimeKind.Utc), StarRating = 4.01 });
+            modelBuilder.Entity<Author>().HasData(new Author { AuthorId = 1, FirstName = "Ian", LastName = "Flemming", DateOfBirth = new DateTime(1908, 05, 28, 0, 0, 0, 0, DateTimeKind.Utc), StarRating = 4.91 });
+            modelBuilder.Entity<Author>().HasData(new Author { AuthorId = 2, FirstName = "John", LastName = "le Carré", DateOfBirth = new DateTime(1931, 10, 19, 0, 0, 0, 0, DateTimeKind.Utc), StarRating = 4.01 });
 
             modelBuilder.Entity<Book>().HasData(new Book { BookId = 1, Title = "Casino Royale", Year = 1953, AuthorId = 1 });
             modelBuilder.Entity<Book>().HasData(new Book { BookId = 2, Title = "Live and Let Die", Year = 1954, AuthorId = 1 });
@@ -44,6 +44,5 @@ namespace Mapping.Data
             modelBuilder.Entity<Book>().HasData(new Book { BookId = 12, Title = "The Honourable Schoolboy", Year = 1977, AuthorId = 2 });
             modelBuilder.Entity<Book>().HasData(new Book { BookId = 13, Title = "Smiley's People", Year = 1979, AuthorId = 2 });
         }
-
     }
 }

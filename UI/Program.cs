@@ -1,20 +1,17 @@
-﻿using Mapping.Data.Models;
-using Mapping.Dto;
+﻿using Mapping.Dto;
 using MappingDemo.Service;
 using MappingDemo.Service.Agilemapper;
 using MappingDemo.Service.Automapper;
 using MappingDemo.Service.Manual;
 using MappingDemo.Service.Mapster;
-using Mapster;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace MappingDemo
 {
-    class Program
+    internal class Program
     {
-        static void Main()
+        private static void Main()
         {
             Console.WriteLine("Mapping demo");
 
@@ -26,7 +23,7 @@ namespace MappingDemo
                 new BookServiceMapsterMapper()
             };
 
-            foreach ( IBookService service in services)
+            foreach (IBookService service in services)
             {
                 Console.WriteLine($"Running for type {service.GetType().Name}");
 
@@ -64,7 +61,12 @@ namespace MappingDemo
             }
         }
 
-        static void WriteAuthor(AuthorDto authorDto)
+        private static void WriteAnotherBook(BookWithAuthorDto anotherBookDto)
+        {
+            Console.WriteLine($"Book Id: {anotherBookDto.BookId}, Title: {anotherBookDto.Title}, Year (byte!): {anotherBookDto.Year}, Author Fullname: {anotherBookDto.AuthorFullName}, Author Rating: {anotherBookDto.AuthorStarRating}");
+        }
+
+        private static void WriteAuthor(AuthorDto authorDto)
         {
             Console.WriteLine($"AuthorId : {authorDto.AuthorId}, FirstName: {authorDto.FirstName}, Last Name: {authorDto.LastName}, Books: {(authorDto.Books != null ? "" : "NULL")}");
 
@@ -77,14 +79,9 @@ namespace MappingDemo
             }
         }
 
-        static void WriteBook(BookDto bookDto)
+        private static void WriteBook(BookDto bookDto)
         {
             Console.WriteLine($"{bookDto.BookId}, {bookDto.Title}, {bookDto.Year}");
-        }
-
-        static void WriteAnotherBook(BookWithAuthorDto anotherBookDto)
-        {
-            Console.WriteLine($"Book Id: {anotherBookDto.BookId}, Title: {anotherBookDto.Title}, Year (byte!): {anotherBookDto.Year}, Author Fullname: {anotherBookDto.AuthorFullName}, Author Rating: {anotherBookDto.AuthorStarRating}");
         }
     }
 }

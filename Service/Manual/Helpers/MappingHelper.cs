@@ -6,7 +6,7 @@ namespace MappingDemo.Service.Manual.Helpers
 {
     public static class MappingHelper
     {
-        public static AuthorDto MapAuthorAuthorDto( Author author )
+        public static AuthorDto MapAuthorAuthorDto(Author author)
         {
             return author != null ? new AuthorDto
             {
@@ -18,14 +18,13 @@ namespace MappingDemo.Service.Manual.Helpers
             } : null;
         }
 
-        public static BookDto MapBookBookDto(Book book)
+        public static Author MapAuthorDtoAuthor(AuthorDto authorDto)
         {
-            return book != null ? new BookDto
+            return authorDto != null ? new Author
             {
-                AuthorId = book.AuthorId,
-                BookId = book.BookId,
-                Title = book.Title,
-                Year = book.Year
+                AuthorId = authorDto.AuthorId,
+                FirstName = authorDto.FirstName,
+                LastName = authorDto.LastName,
             } : null;
         }
 
@@ -41,13 +40,14 @@ namespace MappingDemo.Service.Manual.Helpers
             } : null;
         }
 
-        public static Author MapAuthorDtoAuthor(AuthorDto authorDto)
+        public static BookDto MapBookBookDto(Book book)
         {
-            return authorDto != null ? new Author
+            return book != null ? new BookDto
             {
-                AuthorId = authorDto.AuthorId,
-                FirstName = authorDto.FirstName,
-                LastName = authorDto.LastName,
+                AuthorId = book.AuthorId,
+                BookId = book.BookId,
+                Title = book.Title,
+                Year = book.Year
             } : null;
         }
     }

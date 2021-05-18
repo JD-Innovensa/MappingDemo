@@ -17,7 +17,6 @@ namespace MappingDemo.Service.Agilemapper
             .To<BookWithAuthorDto>()
             .Map(ctx => ctx.Source.Author.FirstName + " " + ctx.Source.Author.LastName)
             .To(dto => dto.AuthorFullName);
-
         }
 
         public AuthorDto AddAuthor(AuthorDto authorDto)
@@ -40,22 +39,6 @@ namespace MappingDemo.Service.Agilemapper
 
             // AgileMapper - overwrite changes in original dto
             return Mapper.Map(author).Over(authorDto);
-        }
-
-        public BookWithAuthorDto GetBookWithAuthor(int id)
-        {
-            using var context = new BooksDbContext();
-
-            context.Database.EnsureCreated();
-
-            var book = context.Books
-                .Include(x => x.Author)
-                .First(x => x.AuthorId == id);
-
-            // AgileMapper            
-            var anotherBookDto = Mapper.Map(book).ToANew<BookWithAuthorDto>();
-
-            return anotherBookDto;
         }
 
         public AuthorDto GetAuthor(int id)
@@ -85,6 +68,22 @@ namespace MappingDemo.Service.Agilemapper
                 .First(x => x.AuthorId == id);
 
             return authorDto;
+        }
+
+        public BookWithAuthorDto GetBookWithAuthor(int id)
+        {
+            using var context = new BooksDbContext();
+
+            context.Database.EnsureCreated();
+
+            var book = context.Books
+                .Include(x => x.Author)
+                .First(x => x.AuthorId == id);
+
+            // AgileMapper
+            var anotherBookDto = Mapper.Map(book).ToANew<BookWithAuthorDto>();
+
+            return anotherBookDto;
         }
     }
 }

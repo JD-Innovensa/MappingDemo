@@ -6,7 +6,7 @@ using System.Linq;
 
 namespace MappingDemo.Service.Manual
 {
-    public class BookServiceManualMapping: IBookService
+    public class BookServiceManualMapping : IBookService
     {
         public AuthorDto AddAuthor(AuthorDto authorDto)
         {
@@ -30,26 +30,10 @@ namespace MappingDemo.Service.Manual
             return MappingHelper.MapAuthorAuthorDto(author);
         }
 
-        public BookWithAuthorDto GetBookWithAuthor(int id)
-        {
-            using var context = new BooksDbContext();
-
-            context.Database.EnsureCreated();
-
-            var book = context.Books
-                .Include(x => x.Author)
-                .First(x => x.AuthorId == id);
-
-            // Manual map
-            var anotherBookDto = MappingHelper.MapBookAnotherBookDto(book);
-
-            return anotherBookDto;
-        }
-
         public AuthorDto GetAuthor(int id)
         {
             using var context = new BooksDbContext();
-            
+
             context.Database.EnsureCreated();
 
             var author = context.Authors.Find(id);
@@ -76,5 +60,20 @@ namespace MappingDemo.Service.Manual
             return authorDto;
         }
 
+        public BookWithAuthorDto GetBookWithAuthor(int id)
+        {
+            using var context = new BooksDbContext();
+
+            context.Database.EnsureCreated();
+
+            var book = context.Books
+                .Include(x => x.Author)
+                .First(x => x.AuthorId == id);
+
+            // Manual map
+            var anotherBookDto = MappingHelper.MapBookAnotherBookDto(book);
+
+            return anotherBookDto;
+        }
     }
 }
