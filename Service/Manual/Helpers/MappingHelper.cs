@@ -36,7 +36,7 @@ namespace MappingDemo.Service.Manual.Helpers
                 BookId = book.BookId,
                 Title = book.Title,
                 AuthorStarRating = book.Author.StarRating,
-                AuthorFullName = book.Author?.FirstName + " " + book.Author?.LastName
+                AuthorFullName = string.Format("{0} {1}", book.Author.FirstName, book.Author.LastName)
             } : null;
         }
 

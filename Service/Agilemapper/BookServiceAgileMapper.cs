@@ -15,7 +15,7 @@ namespace MappingDemo.Service.Agilemapper
             Mapper.WhenMapping
             .From<Book>()
             .To<BookWithAuthorDto>()
-            .Map(ctx => ctx.Source.Author.FirstName + " " + ctx.Source.Author.LastName)
+            .Map(ctx => string.Format("{0} {1}", ctx.Source.Author.FirstName, ctx.Source.Author.LastName))
             .To(dto => dto.AuthorFullName);
         }
 

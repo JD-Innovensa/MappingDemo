@@ -12,7 +12,7 @@ namespace MappingDemo.Service.Automapper.Config
             CreateMap<Book, BookDto>();
             CreateMap<Book, BookWithAuthorDto>()
                 .ForMember(dest => dest.Year, opt => opt.Ignore())
-                .ForMember(dest => dest.AuthorFullName, opt => opt.MapFrom(s => s.Author.FirstName + " " + s.Author.LastName));
+                .ForMember(dest => dest.AuthorFullName, opt => opt.MapFrom(s => string.Format("{0} {1}", s.Author.FirstName, s.Author.LastName)));
         }
     }
 }
