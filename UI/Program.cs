@@ -1,9 +1,11 @@
-﻿using Mapping.Dto;
+﻿using Mapping.Data.Models;
+using Mapping.Dto;
 using MappingDemo.Service;
 using MappingDemo.Service.Agilemapper;
 using MappingDemo.Service.Automapper;
 using MappingDemo.Service.Manual;
 using MappingDemo.Service.Mapster;
+using Mapster;
 using System;
 using System.Collections.Generic;
 using System.Linq;

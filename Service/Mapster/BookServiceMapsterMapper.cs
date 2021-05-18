@@ -11,6 +11,9 @@ namespace MappingDemo.Service.Mapster
     {
         public BookServiceMapsterMapper()
         {
+            // Added config here for simplicity
+            TypeAdapterConfig<Book,BookWithAuthorDto>.NewConfig()
+                .Map(dest => dest.AuthorFullName, src => string.Format("{0} {1}", src.Author.FirstName, src.Author.LastName));
         }
 
         public AuthorDto AddAuthor(AuthorDto authorDto)
@@ -48,9 +51,8 @@ namespace MappingDemo.Service.Mapster
                 .First(x => x.AuthorId == id);
 
             // MapsterMapper            
-            var anotherBookDto = book.Adapt<BookWithAuthorDto>()
-                .BuildAdapter(;                
-
+            var anotherBookDto = book.Adapt<BookWithAuthorDto>();
+            
             return anotherBookDto;
         }
 
@@ -65,7 +67,6 @@ namespace MappingDemo.Service.Mapster
             // MapsterMapper
             var authorDto = author.Adapt<AuthorDto>();
             
-
             return authorDto;
         }
 

@@ -10,7 +10,14 @@ namespace MappingDemo.Service.Agilemapper
     public class BookServiceAgileMapper : IBookService
     {
         public BookServiceAgileMapper()
-        {            
+        {
+            // Added config here for simplicity
+            Mapper.WhenMapping
+            .From<Book>()
+            .To<BookWithAuthorDto>()
+            .Map(ctx => ctx.Source.Author.FirstName + " " + ctx.Source.Author.LastName)
+            .To(dto => dto.AuthorFullName);
+
         }
 
         public AuthorDto AddAuthor(AuthorDto authorDto)
